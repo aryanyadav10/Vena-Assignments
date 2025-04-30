@@ -1,5 +1,11 @@
 import java.util.*;
-import java.util.stream.Collectors;
+
+//Problem 1: Advanced Student Management (List, Comparator, Map)
+//
+//Create a Student class with id, name, age, grade, and branch.
+//        •	Store at least 15 students in an ArrayList.
+//        •	Sort students by branch, then by descending grade.
+//•	Group students by branch using a Map<String, List<Student>>.
 
 class Student {
     private int id;
@@ -8,7 +14,7 @@ class Student {
     private String branch;
     private String grade;
 
-    Student(int id, String name, int age, String branch, String grade){
+    Student(int id, String name, int age, String branch, String grade) {
         this.id = id;
         this.name = name;
         this.age = age;
@@ -23,16 +29,19 @@ class Student {
     public String getBranch() { return branch; }
     public String getGrade() { return grade; }
 
-    @Override
+    // Print format
     public String toString() {
-        return "Student{id=" + id + ", name='" + name + "', age=" + age + ", branch='" + branch + "', grade='" + grade + "'}";
+        return "Student{id=" + id + ", name='" + name + "', age=" + age +
+                ", branch='" + branch + "', grade='" + grade + "'}";
     }
 }
 
 public class q1 {
-    public static void main(String[] args){
-        ArrayList<Student> students = new ArrayList<>();
+    public static void main(String[] args) {
+        // Create list of students
+        List<Student> students = new ArrayList<>();
 
+        // Adding 15 students
         students.add(new Student(1, "Aarav Sharma", 20, "Computer Science", "A"));
         students.add(new Student(2, "Meera Verma", 21, "Electronics", "B"));
         students.add(new Student(3, "Kunal Joshi", 19, "Mechanical", "A"));
@@ -49,18 +58,29 @@ public class q1 {
         students.add(new Student(14, "Ritika Sharma", 23, "Computer Science", "A"));
         students.add(new Student(15, "Dev Malhotra", 21, "Electronics", "B"));
 
-        // Sort by branch, then by grade descending
-        students.sort(Comparator.comparing(Student::getBranch)
-                .thenComparing(Comparator.comparing(Student::getGrade).reversed()));
+        // 🔹 Sort students by branch (ascending), then by grade (descending)
+        students.sort((s1, s2) -> {
+            int branchCompare = s1.getBranch().compareTo(s2.getBranch());
+            if (branchCompare != 0) {
+                return branchCompare;  // if branches are different
+            }
+            // If branch is same, compare grade in descending order (A > B > C)
+            return s2.getGrade().compareTo(s1.getGrade());
+        });
 
-        // Group by branch
-        Map<String, List<Student>> groupedByBranch = students.stream()
-                .collect(Collectors.groupingBy(Student::getBranch));
+        // 🔹 Group students by branch
+        Map<String, List<Student>> groupedByBranch = new TreeMap<>(); // TreeMap gives sorted branch names
 
-        // Output the grouped students
-        for (Map.Entry<String, List<Student>> entry : groupedByBranch.entrySet()) {
-            System.out.println("Branch: " + entry.getKey());
-            for (Student s : entry.getValue()) {
+        for (Student student : students) {
+            groupedByBranch
+                    .computeIfAbsent(student.getBranch(), k -> new ArrayList<>())
+                    .add(student);
+        }
+
+        // 🔹 Print grouped students
+        for (String branch : groupedByBranch.keySet()) {
+            System.out.println("\nBranch: " + branch);
+            for (Student s : groupedByBranch.get(branch)) {
                 System.out.println("  " + s);
             }
         }
