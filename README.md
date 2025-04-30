@@ -1,3 +1,4 @@
-# Vena Assignment
+# Vena Assignments
 
-Completed the java sheet and banking project.
+Assignment1 - Completed the oops sheet and banking project.
+Assignment2 - Completed the colelctions sheet and university assignment.
