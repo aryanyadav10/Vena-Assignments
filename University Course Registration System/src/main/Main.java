@@ -19,13 +19,22 @@ public class Main {
         system.register("S2", "C101");
         system.register("S3", "C101"); // goes to waitlist
 
+        System.out.println();
+
         system.drop("S1", "C101"); // S3 promoted
 
+        System.out.println();
+
         system.listStudents("C101");
+        System.out.println();
         system.listByBranch("CSE");
+        System.out.println();
         system.listCoursesSortedByEnrolledCount();
+        System.out.println();
         system.filterCoursesByCredits(4);
+        System.out.println();
         system.filterCoursesByInstructor("Dr. Ray");
+        System.out.println();
         system.groupCoursesByInstructor();
     }
 }

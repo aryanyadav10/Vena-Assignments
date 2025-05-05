@@ -2,6 +2,7 @@ package service;
 
 import model.Course;
 import model.Student;
+import util.EmailValidator;
 
 import java.util.*;
 
@@ -21,7 +22,7 @@ public class RegistrationSystem {
         Student s = studentMap.get(studentId);
         Course c = courseMap.get(courseId);
 
-        if (s == null || c == null || s.email == null || !s.email.contains("@")) {
+        if (s == null || c == null || !EmailValidator.isValid(s.email)) {
             System.out.println("Invalid student or course ID/email.");
             return;
         }

@@ -59,11 +59,17 @@ public class q9 {
 
     // Add or update a player's score
     public void addOrUpdatePlayer(String name, int score) {
-        Player newPlayer = new Player(name, score);
-
-        // If player already exists, remove the old one and re-add with updated score
-        leaderboard.remove(newPlayer);
-        leaderboard.add(newPlayer);
+        Player updatedPlayer = null;
+        for(Player p : leaderboard){
+            if(p.getName().equals(name)){
+                updatedPlayer = p;
+                break;
+            }
+        }
+        if(updatedPlayer != null){
+            leaderboard.remove(updatedPlayer);
+        }
+        leaderboard.add(new Player(name, score)); // Add or re-add
     }
 
     // Print leaderboard
